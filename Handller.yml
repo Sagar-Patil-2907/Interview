@@ -1,0 +1,38 @@
+---
+- name: Handlers Example for RHEL/CentOS
+  hosts: webservers
+  gather_facts: false
+  tasks:
+    - name: Install httpd latest version
+      yum:
+        name: httpd
+        state: latest
+      become: true
+      notify: restart_httpd
+
+  handlers:
+    - name: restart_httpd
+      become: true
+      service:
+        name: httpd
+        state: restarted
+
+
+- name: Handlers Example for Ubuntu/Debian
+  hosts: webservers
+  gather_facts: false
+  tasks:
+    - name: Install apache2 latest version
+      apt:
+        name: apache2
+        state: latest
+        update_cache: yes
+      become: true
+      notify: restart_apache2
+
+  handlers:
+    - name: restart_apache2
+      become: true
+      service:
+        name: apache2
+        state: restarted
