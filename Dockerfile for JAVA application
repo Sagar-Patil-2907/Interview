@@ -1,14 +1,26 @@
 # This line defines the base image use Eclipse Temurin JDK 17 on Alpine Linux
 FROM eclipse-temurin:17-jdk-alpine
+
 # This tells Docker that your container will listen on port 8080    
 EXPOSE 8080
+
 # This executes the Linux command ls during the image build process.
-RUN ls 
+RUN ls
+
 # Sets an environment variable APP_HOME with the value /usr/src/app.
 ENV APP_HOME /usr/src/app
+
 # This copies your application’s JAR file (from local folder app/) into the container’s directory /usr/src/app/ (defined earlier as $APP_HOME).
 COPY app/*.jar $APP_HOME/app.jar
+
 # Sets the working directory inside the container After this line, all commands will run from /usr/src/app.
 WORKDIR $APP_HOME
+
 # This is the default command that runs when the container starts.
 CMD ["java", "-jar", "app.jar"]
+
+
+Breakdown :
+This Dockerfile builds a lightweight Java 17 application image.
+It starts from the Eclipse Temurin JDK 17 base image on Alpine Linux, exposes port 8080, sets an application directory using environment variables, copies the JAR file, and finally runs it using the java -jar command.
+The WORKDIR ensures all commands run inside the app directory, and the image remains clean and organized.
